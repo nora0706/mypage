@@ -4,7 +4,7 @@ window.addEventListener("load", function () {
 
 
   let net = new brain.NeuralNetwork();
-  fetch("/js/network.json")
+  fetch("js/network.json")
   .then(response => response.text())
   .then(result => net.fromJSON(result))
   .catch(error => console.log('error', error));
