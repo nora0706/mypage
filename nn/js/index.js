@@ -117,7 +117,7 @@ window.addEventListener("load", function () {
   function position(e) {
     let touch = e.touches;
     if (touch)
-      return [touch[0].clientX - canvas.getBoundingClientRect().left, touch[0].clientY - canvas.getBoundingClientRect().left]
+      return [touch[0].clientX - canvas.getBoundingClientRect().left, touch[0].clientY - canvas.getBoundingClientRect().top]
     return [e.offsetX, e.offsetY];
   }
   
