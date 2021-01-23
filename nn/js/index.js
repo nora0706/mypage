@@ -23,8 +23,25 @@ window.addEventListener("load", function () {
   ctx.lineJoin = "round";
   ctx.lineWidth = 15;
   let drawing = false;
+
+  // Prevent scrolling when touching the canvas
+  document.body.addEventListener("touchstart", function (e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  },  { passive: false });
+  document.body.addEventListener("touchend", function (e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  },  { passive: false });
+  document.body.addEventListener("touchmove", function (e) {
+    if (e.target == canvas) {
+      e.preventDefault();
+    }
+  },  { passive: false });
   
-  canvas.onmousedown = (e) => {
+  canvas.onmousedown = canvas.ontouchstart = (e) => {
     drawing = true;
     ctx.fillStyle = ctx.createPattern(canvas, "no-repeat");
     const pos = position(e);
@@ -33,7 +50,7 @@ window.addEventListener("load", function () {
     draw.apply(null, pos);
   };
   
-  canvas.onmousemove = (e) => draw.apply(null, position(e));
+  canvas.onmousemove = canvas.ontouchmove = (e) => draw.apply(null, position(e));
   function draw(x, y) {
     if (!drawing) {
       return;
@@ -98,10 +115,13 @@ window.addEventListener("load", function () {
     ctx.clearRect(0, 0, bigCanvas, bigCanvas);
   }
   function position(e) {
+    let touch = e.touches;
+    if (touch)
+      return [touch[0].clientX - canvas.getBoundingClientRect().left, touch[0].clientY - canvas.getBoundingClientRect().left]
     return [e.offsetX, e.offsetY];
   }
   
-  canvas.onmouseup = canvas.onmouseleave = (e) => (drawing = false);
+  canvas.onmouseup = canvas.onmouseleave = canvas.ontouchend = (e) => (drawing = false);
   canvas.parentNode.querySelector("input[value='check']").onclick = (e) =>
     check();
   canvas.parentNode.querySelector("input[value='clear']").onclick = (e) =>
