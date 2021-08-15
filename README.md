@@ -1,2 +1,2 @@
 # mypage
-My home page: [cola350.ml](https://cola350.ml)
+My home page: [cola355.ml](https://cola355.ml)
